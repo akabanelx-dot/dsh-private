@@ -1,0 +1,28 @@
+packages:
+  - .
+
+nodeLinker: hoisted
+autoInstallPeers: false
+minimumReleaseAgeExclude:
+  - '@linxin666/dsh-client-ui-aionui-panel@0.1.10'
+  - '@linxin666/dsh-client-ui-git-graph@0.1.10'
+  - '@linxin666/dsh-client-ui-skin-center@0.1.10'
+  - '@linxin666/dsh-client-ui-task-board@0.1.10'
+  - '@linxin666/dsh-client-ui-web-ui-settings@0.1.10'
+  - '@linxin666/dsh-live-stats@0.1.10'
+  - '@linxin666/dsh-pet@0.1.10'
+  - '@linxin666/dsh-remote-web-ui@0.1.10'
+  - '@linxin666/dsh-skins@0.1.10'
+  - '@linxin666/dsh-ssh@0.1.10'
+  - '@linxin666/dsh-web-ui-all@0.1.10'
+  - dsh-better-sidebar@0.11.0
+  - '@nanmicoder/dsh-agent-teams@0.1.2'
+  - '@tt-a1i/archify-dsh@0.1.0'
+  - '@liustack/modsearch@5.4.1'
+  - '@liustack/modlens@3.16.1'
+allowBuilds:
+  cloudflared: true
+  cpu-features: true
+  node-pty: true
+  protobufjs: true
+  ssh2: true

@@ -1,0 +1,44 @@
+{
+  "name": "dsh-profile-web",
+  "private": true,
+  "dependencies": {
+    "@dsh-external/dsh-super-injector": "link:F:/WorkSpace/DSH/.plugins/dsh-super-injector",
+    "@dsh-external/turn-rewind": "link:F:/WorkSpace/DSH/.plugins/dsh-turn-rewind",
+    "@dsh-external/workflow": "git+https://github.com/dsh-external/dsh_workflow.git",
+    "@linxin666/dsh-web-ui-all": "0.1.10",
+    "@liustack/modlens": "^3.16.1",
+    "@liustack/modsearch": "^5.4.1",
+    "@nanmicoder/dsh-agent-teams": "^0.1.2",
+    "@omdsh-dev/dsh-genui": "github:omdsh-dev/dsh-genui",
+    "@taxueseek/argo-dsh": "link:F:/WorkSpace/DSH/.plugins/argo/packages/dsh-plugin",
+    "@tt-a1i/archify-dsh": "0.1.0",
+    "dsh-at-file": "https://github.com/omdsh-dev/dsh-at-file/archive/refs/tags/v0.4.0.tar.gz",
+    "dsh-better-sidebar": "^0.11.0",
+    "dsh-custom-tool": "https://github.com/omdsh-dev/dsh-custom-tool/archive/refs/heads/main.tar.gz",
+    "dsh-memory-evolve": "link:F:/WorkSpace/DSH/.plugins/dsh-memory-evolve",
+    "dsh-notification": "https://github.com/omdsh-dev/dsh-notification/archive/refs/heads/main.tar.gz"
+  },
+  "dsh": {
+    "profile": {
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "dsh-auto-approve",
+        "@deepseek-ai/dsh-web-app",
+        "@linxin666/dsh-web-ui-all",
+        "dsh-better-sidebar",
+        "@nanmicoder/dsh-agent-teams",
+        "@tt-a1i/archify-dsh",
+        "dsh-custom-tool",
+        "dsh-notification",
+        "@omdsh-dev/dsh-genui",
+        "@dsh-external/workflow",
+        "@dsh-external/turn-rewind",
+        "@liustack/modsearch",
+        "dsh-at-file",
+        "@liustack/modlens",
+        "@dsh-external/dsh-super-injector",
+        "@taxueseek/argo-dsh"
+      ]
+    }
+  }
+}

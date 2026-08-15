@@ -1,0 +1,16 @@
+﻿- insert:
+    - id: dsh-memory-evolve
+      name: dsh-memory-evolve
+      config:
+        reviewEnabled: true
+        reviewInterval: 10
+- insert:
+    - id: dsh-plugin-marketplace
+      name: dsh-plugin-marketplace
+- id: pet
+  disabled: true
+- insert:
+    - id: dsh-external-dsh-client-ui-skin-maid-atelier
+      name: "@dsh-external/dsh-client-ui-skin-maid-atelier"
+- id: ui-dsh-aionui-panel
+  disabled: true
