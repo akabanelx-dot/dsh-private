@@ -101,6 +101,19 @@ function Ensure-PatchEntry([string]$entryText) {
   Write-Host "[OK] patch entry registered: $($nameLine.Trim())" -ForegroundColor Green
 }
 
+function Install-BundledPlugin([string]$src, [string]$dest) {
+  if (-not (Test-Path (Join-Path $src "package.json"))) {
+    Write-Host "[SKIP] bundled plugin source not found: $src" -ForegroundColor Yellow
+    return $false
+  }
+  New-Item -ItemType Directory -Force -Path (Split-Path $dest -Parent) | Out-Null
+  if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
+  Copy-Item $src $dest -Recurse
+  if (Test-Path (Join-Path $dest ".git")) { Remove-Item (Join-Path $dest ".git") -Recurse -Force }
+  Write-Host "[OK] bundled plugin copied to $dest" -ForegroundColor Green
+  return $true
+}
+
 # ---------- 3. npm packages ----------
 Write-Host "`n########## Group 1: npm packages ##########" -ForegroundColor Magenta
 Add-Plugin "dsh-better-sidebar"
@@ -151,33 +164,42 @@ if (Ensure-GitClone "https://github.com/csyangwen/dsh-memory-evolve.git" $mem) {
 # dsh-super-injector (published release tarball, includes built lib/)
 Add-Plugin "https://github.com/yjh051108/dsh-super-injector/releases/download/v0.3.3/dsh-external-dsh-super-injector-0.3.3.tgz"
 
-# dsh-auto-approve (bundled in this repo)
-$auto = Join-Path $root "plugins\dsh-auto-approve"
-Add-LocalPlugin $auto
-
-# maid-atelier skin (bundled in this repo)
-$maid = Join-Path $root "plugins\dsh-client-ui-skin-maid-atelier"
-Add-LocalPlugin $maid
-
-# Ensure dsh-auto-approve sits before @deepseek-ai/dsh-web-app in bundles
-$profilePkg = Join-Path $env:USERPROFILE ".dsh\profiles\web\package.json"
-if (Test-Path $profilePkg) {
+# dsh-auto-approve (bundled in this repo; copy into profile node_modules like the author's setup)
+$autoSrc = Join-Path $root "plugins\dsh-auto-approve"
+$autoDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\dsh-auto-approve"
+if (Install-BundledPlugin $autoSrc $autoDst) {
+  # Ensure it is registered in dsh.profile.bundles before @deepseek-ai/dsh-web-app
+  $profilePkg = Join-Path $env:USERPROFILE ".dsh\profiles\web\package.json"
   try {
     $pkg = Get-Content $profilePkg -Raw | ConvertFrom-Json
     $bundles = @($pkg.dsh.profile.bundles)
-    if ($bundles -contains "dsh-auto-approve") {
-      $bundles = @($bundles | Where-Object { $_ -ne "dsh-auto-approve" })
-      $idx = [Array]::IndexOf($bundles, "@deepseek-ai/dsh-web-app")
-      if ($idx -lt 0) { $idx = 1 }
-      $bundles = @($bundles[0..($idx-1)]) + @("dsh-auto-approve") + @($bundles[$idx..($bundles.Count-1)])
+    if ($bundles -notcontains "dsh-auto-approve") {
+      $bundles = @("dsh-auto-approve") + $bundles
       $pkg.dsh.profile.bundles = $bundles
-      $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-      [System.IO.File]::WriteAllText($profilePkg, ($pkg | ConvertTo-Json -Depth 20), $utf8NoBom)
-      Write-Host "[OK] dsh-auto-approve moved before @deepseek-ai/dsh-web-app in bundles" -ForegroundColor Green
     }
+    $bundles = @($pkg.dsh.profile.bundles)
+    $bundles = @($bundles | Where-Object { $_ -ne "dsh-auto-approve" })
+    $idx = [Array]::IndexOf($bundles, "@deepseek-ai/dsh-web-app")
+    if ($idx -lt 0) { $idx = 1 }
+    $bundles = @($bundles[0..($idx-1)]) + @("dsh-auto-approve") + @($bundles[$idx..($bundles.Count-1)])
+    $pkg.dsh.profile.bundles = $bundles
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($profilePkg, ($pkg | ConvertTo-Json -Depth 20), $utf8NoBom)
+    Write-Host "[OK] dsh-auto-approve registered before @deepseek-ai/dsh-web-app in bundles" -ForegroundColor Green
   } catch {
-    Write-Host "[WARN] could not reorder dsh-auto-approve bundle: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Host "[WARN] could not register dsh-auto-approve bundle: $($_.Exception.Message)" -ForegroundColor Yellow
   }
+}
+
+# maid-atelier skin (bundled in this repo; copy into profile node_modules + patch roster)
+$maidSrc = Join-Path $root "plugins\dsh-client-ui-skin-maid-atelier"
+$maidDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\@dsh-external\dsh-client-ui-skin-maid-atelier"
+if (Install-BundledPlugin $maidSrc $maidDst) {
+  Ensure-PatchEntry @"
+- insert:
+    - id: dsh-external-dsh-client-ui-skin-maid-atelier
+      name: "@dsh-external/dsh-client-ui-skin-maid-atelier"
+"@
 }
 
 # ---------- 7. DSH-Plugins-Marketplace ----------
