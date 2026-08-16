@@ -18,7 +18,9 @@
 #    - cloned/bundled local plugins: dsh-turn-rewind, dsh-memory-evolve,
 #      dsh-super-injector
 #    - self-developed plugins (cloned from akabanelx-dot/dsh-plugins):
-#      dsh-auto-approve, dsh-sandbox-governance, maid-atelier skin
+#      dsh-auto-approve, dsh-sandbox-governance
+#    - maid-atelier skin (cloned from upstream dsh-external/dsh-deep-whale,
+#      CC BY-NC-SA 4.0, NOT self-developed)
 #    - presets: anchored-standard, router-standard, liangshen, liangshen-exact
 #    - extras: jacobian (global CLI), claude-paper (paper-study skill)
 # ============================================================
@@ -166,7 +168,7 @@ if (Ensure-GitClone "https://github.com/csyangwen/dsh-memory-evolve.git" $mem) {
 # dsh-super-injector (published release tarball, includes built lib/)
 Add-Plugin "https://github.com/yjh051108/dsh-super-injector/releases/download/v0.3.3/dsh-external-dsh-super-injector-0.3.3.tgz"
 
-# Author self-developed plugins (dsh-plugins repo: auto-approve, sandbox-governance, maid-atelier skin)
+# Author self-developed plugins (dsh-plugins repo: auto-approve, sandbox-governance)
 $plugs = Join-Path $cache "dsh-plugins"
 if (Ensure-GitClone "https://github.com/akabanelx-dot/dsh-plugins.git" $plugs) {
 
@@ -217,8 +219,14 @@ if (Ensure-GitClone "https://github.com/akabanelx-dot/dsh-plugins.git" $plugs) {
     }
   }
 
-  # maid-atelier skin (copy into profile node_modules + patch roster)
-  $maidSrc = Join-Path $plugs "dsh-client-ui-skin-maid-atelier"
+} else {
+  Write-Host "[SKIP] dsh-plugins clone failed (self-developed plugins not installed)" -ForegroundColor Yellow
+}
+
+# maid-atelier skin (upstream dsh-external/dsh-deep-whale, NOT self-developed; CC BY-NC-SA 4.0)
+$whale = Join-Path $cache "dsh-deep-whale"
+if (Ensure-GitClone "https://github.com/dsh-external/dsh-deep-whale.git" $whale) {
+  $maidSrc = Join-Path $whale "maid-atelier"
   $maidDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\@dsh-external\dsh-client-ui-skin-maid-atelier"
   if (Install-BundledPlugin $maidSrc $maidDst) {
     Ensure-PatchEntry @"
@@ -227,9 +235,8 @@ if (Ensure-GitClone "https://github.com/akabanelx-dot/dsh-plugins.git" $plugs) {
       name: "@dsh-external/dsh-client-ui-skin-maid-atelier"
 "@
   }
-
 } else {
-  Write-Host "[SKIP] dsh-plugins clone failed (self-developed plugins not installed)" -ForegroundColor Yellow
+  Write-Host "[SKIP] dsh-deep-whale clone failed (maid-atelier skin not installed)" -ForegroundColor Yellow
 }
 
 # ---------- 7. presets ----------

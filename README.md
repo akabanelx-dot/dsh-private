@@ -20,14 +20,15 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 | `presets/liangshen-exact/` | 梁神模式-精确实验版预设 |
 
 > 想了解这套配置「为什么这么装、每项是什么」，直接看 [CONFIG.md](CONFIG.md)。
-> 作者自研插件（`dsh-auto-approve`、`dsh-sandbox-governance`、女仆装皮肤）已独立成仓：[akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)，安装器会从该仓库克隆安装。
+> 作者自研插件（`dsh-auto-approve`、`dsh-sandbox-governance`）已独立成仓：[akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)，安装器会从该仓库克隆安装。
 
 安装器运行时还会从公开仓库拉取：
 
 - npm：`dsh-better-sidebar`、`@nanmicoder/dsh-agent-teams`、`@liustack/modlens`、`@liustack/modsearch`、`@tt-a1i/archify-dsh`、`@linxin666/dsh-web-ui-all`
 - GitHub tarball / git：`dsh-at-file`、`dsh-custom-tool`、`dsh-notification`、`DSH-Plugins-Marketplace`、`dsh-genui`、`dsh_workflow`
 - 本地 link 插件：`dsh-turn-rewind`、`dsh-memory-evolve`、`dsh-memory`（灵枢记忆，克隆到 `.cache/`）
-- 自研插件（克隆 `akabanelx-dot/dsh-plugins`）：`dsh-auto-approve`、`dsh-sandbox-governance`、`dsh-client-ui-skin-maid-atelier`
+- 自研插件（克隆 `akabanelx-dot/dsh-plugins`）：`dsh-auto-approve`、`dsh-sandbox-governance`
+- 女仆装皮肤（克隆上游 `dsh-external/dsh-deep-whale` 的 `maid-atelier/`，CC BY-NC-SA 4.0，非自研）
 - `dsh-super-injector` v0.3.3 Release tarball
 - 全局 CLI / Skill：`jacobian`、`claude-paper`
 
