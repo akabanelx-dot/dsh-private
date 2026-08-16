@@ -27,7 +27,7 @@
 | `@dsh-external/dsh-super-injector` | 0.3.3 | link → `.plugins/dsh-super-injector` | active | 超级模组注入器：`dev_*` 热重载 / 注入 / 卸载 / 自愈 |
 | `dsh-memory-evolve` | 0.1.0 | link → `.plugins/dsh-memory-evolve` + patch | active | 分层记忆、自我进化、技能/待办/外部 CLI 调度 |
 | `dsh-sandbox-governance` | — | link → `F:\WorkSpace\DSH\dsh-sandbox-governance`（作者本地插件，无公开 remote） | active | 沙箱治理：规则文件 + 统一审计 + autoApprove 接管 |
-| `dsh-plugin-marketplace` | 1.4.9 | GitHub tarball（bradeGithub/DSH-Plugins-Marketplace v1.4.9） | **failed** ⚠️ | DSH 插件市场 UI（当前加载失败，见 §4） |
+| `dsh-plugin-marketplace` | 1.4.9 | GitHub tarball（bradeGithub/DSH-Plugins-Marketplace v1.4.9） | active | DSH 插件市场 UI（8-16 曾加载失败，已修复） |
 | `@dsh-external/dsh-client-ui-skin-maid-atelier` | 0.0.1 | patch | active | 女仆装皮肤（随本仓库 `plugins/` 分发） |
 | `@linxin666/dsh-web-ui-all` | 0.1.16 | npm（聚合包） | active | Web UI 全家桶聚合 |
 
@@ -73,7 +73,7 @@
 
 | 项目 | 现状 | 备注 |
 |---|---|---|
-| `dsh-plugin-marketplace` | `dev_plugin_status` 显示 **failed**（lib/index.js 加载失败） | 已装 tarball v1.4.9；如需修复先看失败原因再重装 |
+| `dsh-plugin-marketplace` | ~~8-16 曾显示 failed（lib/index.js 加载失败）~~ → 已修复，现为 active | 见 §1 |
 | `@taxueseek/argo-dsh` | 已从 package.json / bundles 移除 | 无残留依赖 |
 | `~/.dsh/profiles/web/package.json.bak-*` | 存在多个备份文件 | 历史版本备份 |
 | `~/.dsh/sandbox-refactor/` | 沙箱重构工作目录（含 archived 配置） | 历史工作区 |
