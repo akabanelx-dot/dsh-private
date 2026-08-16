@@ -5,6 +5,7 @@
     "@anionex/dsh-turn-rewind": "link:F:/WorkSpace/DSH/.plugins/dsh-turn-rewind",
     "@dsh-external/dsh-super-injector": "link:F:/WorkSpace/DSH/.plugins/dsh-super-injector",
     "@dsh-external/workflow": "git+https://github.com/dsh-external/dsh_workflow.git",
+    "@furongjun1999/dsh-memory": "link:F:/WorkSpace/DSH/.plugins/dsh-memory",
     "@linxin666/dsh-web-ui-all": "0.1.16",
     "@liustack/modlens": "^3.16.7",
     "@liustack/modsearch": "^5.4.2",
@@ -16,7 +17,7 @@
     "dsh-custom-tool": "https://github.com/omdsh-dev/dsh-custom-tool/archive/refs/heads/main.tar.gz",
     "dsh-memory-evolve": "link:F:/WorkSpace/DSH/.plugins/dsh-memory-evolve",
     "dsh-notification": "https://github.com/omdsh-dev/dsh-notification/archive/refs/heads/main.tar.gz",
-    "dsh-plugin-marketplace": "https://github.com/bradeGithub/DSH-Plugins-Marketplace/archive/refs/tags/v1.3.6.tar.gz",
+    "dsh-plugin-marketplace": "https://github.com/bradeGithub/DSH-Plugins-Marketplace/archive/refs/tags/v1.4.9.tar.gz",
     "dsh-sandbox-governance": "link:F:/WorkSpace/DSH/dsh-sandbox-governance"
   },
   "dsh": {

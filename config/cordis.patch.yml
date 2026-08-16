@@ -5,6 +5,17 @@
         reviewEnabled: true
         reviewInterval: 10
 - insert:
+    - id: dsh-memory
+      name: '@furongjun1999/dsh-memory'
+      config:
+        dbPath: 'F:/WorkSpace/DSH/data/lingshu.db'
+        identity: '灵枢'
+        tools: 'core'
+        memory:
+          userMessage: true
+          assistantMessage: false
+          toolResult: false
+- insert:
     - id: dsh-plugin-marketplace
       name: dsh-plugin-marketplace
 - id: pet

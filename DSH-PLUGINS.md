@@ -26,6 +26,7 @@
 | `@liustack/modlens` | 3.16.7 | npm | active | 纯文本模型的视觉理解（图片转结构化证据） |
 | `@dsh-external/dsh-super-injector` | 0.3.3 | link → `.plugins/dsh-super-injector` | active | 超级模组注入器：`dev_*` 热重载 / 注入 / 卸载 / 自愈 |
 | `dsh-memory-evolve` | 0.1.0 | link → `.plugins/dsh-memory-evolve` + patch | active | 分层记忆、自我进化、技能/待办/外部 CLI 调度 |
+| `@furongjun1999/dsh-memory`（灵枢） | — | link → `.plugins/dsh-memory` + patch | active | 灵枢记忆：SQLite 知识层（`lingshu_*` 工具，db 在 `F:/WorkSpace/DSH/data/lingshu.db`） |
 | `dsh-sandbox-governance` | — | link → `F:\WorkSpace\DSH\dsh-sandbox-governance`（作者本地插件，无公开 remote） | active | 沙箱治理：规则文件 + 统一审计 + autoApprove 接管 |
 | `dsh-plugin-marketplace` | 1.4.9 | GitHub tarball（bradeGithub/DSH-Plugins-Marketplace v1.4.9） | active | DSH 插件市场 UI（8-16 曾加载失败，已修复） |
 | `@dsh-external/dsh-client-ui-skin-maid-atelier` | 0.0.1 | patch | active | 女仆装皮肤（随本仓库 `plugins/` 分发） |
@@ -56,7 +57,7 @@
 | `settings.yaml` | 默认模型（opencode-go / deepseek-v4-flash）、默认预设（router-standard）、权限默认 auto、远程 Web UI 自动隧道、浅色主题等 | ✅ `config/settings.yaml` |
 | `sandbox-rules.json` | 沙箱治理规则（文件/命令/网络 + autoApprove 模式） | ✅ `config/sandbox-rules.json` |
 | `AGENTS.md` | Windows / Git Bash 沙箱规则备忘（受限模式提权流程） | ✅ `config/AGENTS.md` |
-| `cordis.patch.yml` | profile 补丁：memory-evolve / marketplace / maid 皮肤 / pet 禁用 / bash 后端切换 | ✅ `config/cordis.patch.yml` |
+| `cordis.patch.yml` | profile 补丁：memory-evolve / 灵枢 memory / marketplace / maid 皮肤 / pet 禁用 / bash 后端切换 | ✅ `config/cordis.patch.yml` |
 | `.credentials.yaml`、`.anonymous-user-id`、`dsh-ssh.json` | 凭据 / SSH 主机（含明文密码） | ❌ 敏感信息，不入库 |
 | `memories/`、`sessions/`、`attachments/`、`sandbox-audit.jsonl` | 运行数据 | ❌ 不入库 |
 

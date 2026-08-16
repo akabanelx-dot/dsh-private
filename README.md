@@ -12,6 +12,7 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 |---|---|
 | `install.ps1` | 一键安装脚本（Windows PowerShell） |
 | `DSH-PLUGINS.md` | 当前插件清单与说明（快照） |
+| **`CONFIG.md`** | **配置详解：`config/` 每份文件的逐项含义（推荐先读）** |
 | `config/` | 当前 web profile 的 `package.json`、`cordis.patch.yml`、`cordis.yml`、`pnpm-workspace.yaml`，以及用户级 `settings.yaml`、`sandbox-rules.json`、`AGENTS.md` 参考 |
 | `plugins/dsh-auto-approve/` | 自动批准插件（本地自研，随包分发） |
 | `plugins/dsh-client-ui-skin-maid-atelier/` | 女仆装皮肤（本地自研，随包分发） |
@@ -20,11 +21,13 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 | `presets/liangshen/` | 梁神模式 Agent 预设（两阶段锚定 + Code Mode 晋升） |
 | `presets/liangshen-exact/` | 梁神模式-精确实验版预设 |
 
+> 想了解这套配置「为什么这么装、每项是什么」，直接看 [CONFIG.md](CONFIG.md)。
+
 安装器运行时还会从公开仓库拉取：
 
 - npm：`dsh-better-sidebar`、`@nanmicoder/dsh-agent-teams`、`@liustack/modlens`、`@liustack/modsearch`、`@tt-a1i/archify-dsh`、`@linxin666/dsh-web-ui-all`
 - GitHub tarball / git：`dsh-at-file`、`dsh-custom-tool`、`dsh-notification`、`DSH-Plugins-Marketplace`、`dsh-genui`、`dsh_workflow`
-- 本地 link 插件：`dsh-turn-rewind`、`dsh-memory-evolve`（克隆到 `.cache/`）
+- 本地 link 插件：`dsh-turn-rewind`、`dsh-memory-evolve`、`dsh-memory`（灵枢记忆，克隆到 `.cache/`）
 - `dsh-super-injector` v0.3.3 Release tarball
 - 全局 CLI / Skill：`jacobian`、`claude-paper`
 
@@ -65,6 +68,7 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 
 ## 说明
 
+- 配置的逐项解读见 [CONFIG.md](CONFIG.md)；插件运行态快照见 [DSH-PLUGINS.md](DSH-PLUGINS.md)。
 - 安装器里的 `dsh-auto-approve` 会自动调整到 `@deepseek-ai/dsh-web-app` 之前，保证自动批准应答者先于人工应答者注册。
 - `dsh-memory-evolve` 使用 `cordis.patch.yml` 注册，安装器会幂等追加补丁条目。
 - `DSH-Plugins-Marketplace` 以 v1.4.9 tarball 形式与其它插件一致安装（`dsh plugin add`）。
