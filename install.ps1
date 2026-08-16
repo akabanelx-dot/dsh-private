@@ -16,11 +16,11 @@
 #    - GitHub tarballs / git: dsh-at-file, dsh-custom-tool, dsh-notification,
 #      dsh-genui, dsh_workflow, DSH-Plugins-Marketplace
 #    - cloned/bundled local plugins: dsh-turn-rewind, dsh-memory-evolve,
-#      dsh-super-injector, dsh-auto-approve, maid-atelier skin
+#      dsh-super-injector
+#    - self-developed plugins (cloned from akabanelx-dot/dsh-plugins):
+#      dsh-auto-approve, dsh-sandbox-governance, maid-atelier skin
 #    - presets: anchored-standard, router-standard, liangshen, liangshen-exact
 #    - extras: jacobian (global CLI), claude-paper (paper-study skill)
-#    - dsh-sandbox-governance: author-local plugin (no public remote), not
-#      installed by this script; reference only.
 # ============================================================
 
 $ErrorActionPreference = "Continue"
@@ -166,42 +166,70 @@ if (Ensure-GitClone "https://github.com/csyangwen/dsh-memory-evolve.git" $mem) {
 # dsh-super-injector (published release tarball, includes built lib/)
 Add-Plugin "https://github.com/yjh051108/dsh-super-injector/releases/download/v0.3.3/dsh-external-dsh-super-injector-0.3.3.tgz"
 
-# dsh-auto-approve (bundled in this repo; copy into profile node_modules like the author's setup)
-$autoSrc = Join-Path $root "plugins\dsh-auto-approve"
-$autoDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\dsh-auto-approve"
-if (Install-BundledPlugin $autoSrc $autoDst) {
-  # Ensure it is registered in dsh.profile.bundles before @deepseek-ai/dsh-web-app
-  $profilePkg = Join-Path $env:USERPROFILE ".dsh\profiles\web\package.json"
-  try {
-    $pkg = Get-Content $profilePkg -Raw | ConvertFrom-Json
-    $bundles = @($pkg.dsh.profile.bundles)
-    if ($bundles -notcontains "dsh-auto-approve") {
-      $bundles = @("dsh-auto-approve") + $bundles
-      $pkg.dsh.profile.bundles = $bundles
-    }
-    $bundles = @($pkg.dsh.profile.bundles)
-    $bundles = @($bundles | Where-Object { $_ -ne "dsh-auto-approve" })
-    $idx = [Array]::IndexOf($bundles, "@deepseek-ai/dsh-web-app")
-    if ($idx -lt 0) { $idx = 1 }
-    $bundles = @($bundles[0..($idx-1)]) + @("dsh-auto-approve") + @($bundles[$idx..($bundles.Count-1)])
-    $pkg.dsh.profile.bundles = $bundles
-    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-    [System.IO.File]::WriteAllText($profilePkg, ($pkg | ConvertTo-Json -Depth 20), $utf8NoBom)
-    Write-Host "[OK] dsh-auto-approve registered before @deepseek-ai/dsh-web-app in bundles" -ForegroundColor Green
-  } catch {
-    Write-Host "[WARN] could not register dsh-auto-approve bundle: $($_.Exception.Message)" -ForegroundColor Yellow
-  }
-}
+# Author self-developed plugins (dsh-plugins repo: auto-approve, sandbox-governance, maid-atelier skin)
+$plugs = Join-Path $cache "dsh-plugins"
+if (Ensure-GitClone "https://github.com/akabanelx-dot/dsh-plugins.git" $plugs) {
 
-# maid-atelier skin (bundled in this repo; copy into profile node_modules + patch roster)
-$maidSrc = Join-Path $root "plugins\dsh-client-ui-skin-maid-atelier"
-$maidDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\@dsh-external\dsh-client-ui-skin-maid-atelier"
-if (Install-BundledPlugin $maidSrc $maidDst) {
-  Ensure-PatchEntry @"
+  # dsh-auto-approve (copy into profile node_modules like the author's setup)
+  $autoSrc = Join-Path $plugs "dsh-auto-approve"
+  $autoDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\dsh-auto-approve"
+  if (Install-BundledPlugin $autoSrc $autoDst) {
+    # Ensure it is registered in dsh.profile.bundles before @deepseek-ai/dsh-web-app
+    $profilePkg = Join-Path $env:USERPROFILE ".dsh\profiles\web\package.json"
+    try {
+      $pkg = Get-Content $profilePkg -Raw | ConvertFrom-Json
+      $bundles = @($pkg.dsh.profile.bundles)
+      if ($bundles -notcontains "dsh-auto-approve") {
+        $bundles = @("dsh-auto-approve") + $bundles
+        $pkg.dsh.profile.bundles = $bundles
+      }
+      $bundles = @($pkg.dsh.profile.bundles)
+      $bundles = @($bundles | Where-Object { $_ -ne "dsh-auto-approve" })
+      $idx = [Array]::IndexOf($bundles, "@deepseek-ai/dsh-web-app")
+      if ($idx -lt 0) { $idx = 1 }
+      $bundles = @($bundles[0..($idx-1)]) + @("dsh-auto-approve") + @($bundles[$idx..($bundles.Count-1)])
+      $pkg.dsh.profile.bundles = $bundles
+      $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+      [System.IO.File]::WriteAllText($profilePkg, ($pkg | ConvertTo-Json -Depth 20), $utf8NoBom)
+      Write-Host "[OK] dsh-auto-approve registered before @deepseek-ai/dsh-web-app in bundles" -ForegroundColor Green
+    } catch {
+      Write-Host "[WARN] could not register dsh-auto-approve bundle: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+  }
+
+  # dsh-sandbox-governance (copy into profile node_modules + register bundle)
+  $govSrc = Join-Path $plugs "dsh-sandbox-governance"
+  $govDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\dsh-sandbox-governance"
+  if (Install-BundledPlugin $govSrc $govDst) {
+    $profilePkg = Join-Path $env:USERPROFILE ".dsh\profiles\web\package.json"
+    try {
+      $pkg = Get-Content $profilePkg -Raw | ConvertFrom-Json
+      $bundles = @($pkg.dsh.profile.bundles)
+      if ($bundles -notcontains "dsh-sandbox-governance") {
+        $bundles = $bundles + @("dsh-sandbox-governance")
+        $pkg.dsh.profile.bundles = $bundles
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($profilePkg, ($pkg | ConvertTo-Json -Depth 20), $utf8NoBom)
+        Write-Host "[OK] dsh-sandbox-governance registered in bundles" -ForegroundColor Green
+      }
+    } catch {
+      Write-Host "[WARN] could not register dsh-sandbox-governance bundle: $($_.Exception.Message)" -ForegroundColor Yellow
+    }
+  }
+
+  # maid-atelier skin (copy into profile node_modules + patch roster)
+  $maidSrc = Join-Path $plugs "dsh-client-ui-skin-maid-atelier"
+  $maidDst = Join-Path $env:USERPROFILE ".dsh\profiles\web\node_modules\@dsh-external\dsh-client-ui-skin-maid-atelier"
+  if (Install-BundledPlugin $maidSrc $maidDst) {
+    Ensure-PatchEntry @"
 - insert:
     - id: dsh-external-dsh-client-ui-skin-maid-atelier
       name: "@dsh-external/dsh-client-ui-skin-maid-atelier"
 "@
+  }
+
+} else {
+  Write-Host "[SKIP] dsh-plugins clone failed (self-developed plugins not installed)" -ForegroundColor Yellow
 }
 
 # ---------- 7. presets ----------
@@ -228,9 +256,6 @@ Install-Preset "anchored-standard"
 Install-Preset "router-standard"
 Install-Preset "liangshen"
 Install-Preset "liangshen-exact"
-
-# dsh-sandbox-governance is author-local (no public remote) — reference only.
-Write-Host "`n[dsh-sandbox-governance] author-local plugin, not installed by this script (see config/sandbox-rules.json for its rules)." -ForegroundColor DarkGray
 
 # ---------- 8. extras (same as author environment) ----------
 Write-Host "`n########## Group 7: extras ##########" -ForegroundColor Magenta

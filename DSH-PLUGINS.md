@@ -12,7 +12,7 @@
 
 | 包名 | 版本 | 安装来源 | 状态 | 作用 |
 |---|---|---|---|---|
-| `dsh-auto-approve` | 0.1.0 | 本地 bundle（源码在 `F:\WorkSpace\DSH\dsh-auto-approve`，随本仓库 `plugins/` 分发） | active | Codex 风格自动批准：检测到沙箱提权时自动放行，附审计 |
+| `dsh-auto-approve` | 0.1.0 | link → `F:\WorkSpace\DSH\dsh-auto-approve`（源码已入库 [akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)） | active | Codex 风格自动批准：检测到沙箱提权时自动放行，附审计 |
 | `dsh-better-sidebar` | 0.12.2 | npm | active | VSCode 风格右侧边栏（explorer/editor/terminal/git/browser） |
 | `@nanmicoder/dsh-agent-teams` | 0.1.5 | npm | active | 多 Agent 团队协作（captain/member/task） |
 | `@tt-a1i/archify-dsh` | 0.1.0 | npm | active | Archify 架构图 Skill-only bundle |
@@ -27,9 +27,9 @@
 | `@dsh-external/dsh-super-injector` | 0.3.3 | link → `.plugins/dsh-super-injector` | active | 超级模组注入器：`dev_*` 热重载 / 注入 / 卸载 / 自愈 |
 | `dsh-memory-evolve` | 0.1.0 | link → `.plugins/dsh-memory-evolve` + patch | active | 分层记忆、自我进化、技能/待办/外部 CLI 调度 |
 | `@furongjun1999/dsh-memory`（灵枢） | — | link → `.plugins/dsh-memory` + patch | active | 灵枢记忆：SQLite 知识层（`lingshu_*` 工具，db 在 `F:/WorkSpace/DSH/data/lingshu.db`） |
-| `dsh-sandbox-governance` | — | link → `F:\WorkSpace\DSH\dsh-sandbox-governance`（作者本地插件，无公开 remote） | active | 沙箱治理：规则文件 + 统一审计 + autoApprove 接管 |
+| `dsh-sandbox-governance` | 0.1.0 | link → `F:\WorkSpace\DSH\dsh-sandbox-governance`（源码已入库 [akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)） | active | 沙箱治理：规则文件 + 统一审计 + autoApprove 接管 |
 | `dsh-plugin-marketplace` | 1.4.9 | GitHub tarball（bradeGithub/DSH-Plugins-Marketplace v1.4.9） | active | DSH 插件市场 UI（8-16 曾加载失败，已修复） |
-| `@dsh-external/dsh-client-ui-skin-maid-atelier` | 0.0.1 | patch | active | 女仆装皮肤（随本仓库 `plugins/` 分发） |
+| `@dsh-external/dsh-client-ui-skin-maid-atelier` | 0.0.1 | patch（源码已入库 [akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)） | active | 女仆装皮肤 |
 | `@linxin666/dsh-web-ui-all` | 0.1.16 | npm（聚合包） | active | Web UI 全家桶聚合 |
 
 `@linxin666/dsh-web-ui-all` 聚合的子插件（均为 0.1.16）：
@@ -85,4 +85,4 @@
 
 - 本清单只覆盖社区 / 第三方插件；DSH 内置核心插件（`@deepseek-ai/*`、`dsh-*` 官方包）未逐一列出。
 - "active / disabled / failed" 以 `dev_plugin_status` 当前运行态为准。
-- 同步方式：`config/` 与 `presets/` 由本机 `~/.dsh/` 直接复制而来；`plugins/` 为本地自研插件源码。
+- 同步方式：`config/` 与 `presets/` 由本机 `~/.dsh/` 直接复制而来；自研插件源码在 [akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins) 独立维护（本仓库不再随包携带）。

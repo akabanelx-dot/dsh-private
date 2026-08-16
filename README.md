@@ -14,24 +14,22 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 | `DSH-PLUGINS.md` | 当前插件清单与说明（快照） |
 | **`CONFIG.md`** | **配置详解：`config/` 每份文件的逐项含义（推荐先读）** |
 | `config/` | 当前 web profile 的 `package.json`、`cordis.patch.yml`、`cordis.yml`、`pnpm-workspace.yaml`，以及用户级 `settings.yaml`、`sandbox-rules.json`、`AGENTS.md` 参考 |
-| `plugins/dsh-auto-approve/` | 自动批准插件（本地自研，随包分发） |
-| `plugins/dsh-client-ui-skin-maid-atelier/` | 女仆装皮肤（本地自研，随包分发） |
 | `presets/anchored-standard/` | 锚定标准 Agent 预设 |
 | `presets/router-standard/` | 思维模式路由 Agent 预设（spec/react/weak） |
 | `presets/liangshen/` | 梁神模式 Agent 预设（两阶段锚定 + Code Mode 晋升） |
 | `presets/liangshen-exact/` | 梁神模式-精确实验版预设 |
 
 > 想了解这套配置「为什么这么装、每项是什么」，直接看 [CONFIG.md](CONFIG.md)。
+> 作者自研插件（`dsh-auto-approve`、`dsh-sandbox-governance`、女仆装皮肤）已独立成仓：[akabanelx-dot/dsh-plugins](https://github.com/akabanelx-dot/dsh-plugins)，安装器会从该仓库克隆安装。
 
 安装器运行时还会从公开仓库拉取：
 
 - npm：`dsh-better-sidebar`、`@nanmicoder/dsh-agent-teams`、`@liustack/modlens`、`@liustack/modsearch`、`@tt-a1i/archify-dsh`、`@linxin666/dsh-web-ui-all`
 - GitHub tarball / git：`dsh-at-file`、`dsh-custom-tool`、`dsh-notification`、`DSH-Plugins-Marketplace`、`dsh-genui`、`dsh_workflow`
 - 本地 link 插件：`dsh-turn-rewind`、`dsh-memory-evolve`、`dsh-memory`（灵枢记忆，克隆到 `.cache/`）
+- 自研插件（克隆 `akabanelx-dot/dsh-plugins`）：`dsh-auto-approve`、`dsh-sandbox-governance`、`dsh-client-ui-skin-maid-atelier`
 - `dsh-super-injector` v0.3.3 Release tarball
 - 全局 CLI / Skill：`jacobian`、`claude-paper`
-
-> `dsh-sandbox-governance`（沙箱治理插件）是作者本地插件，无公开 remote，本安装器不安装；其规则文件见 `config/sandbox-rules.json`。
 
 ## 安装步骤
 
