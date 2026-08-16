@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "filesystem": {
+    "allowWrite": [],
+    "denyWrite": [],
+    "denyRead": []
+  },
+  "commands": {
+    "allow": [],
+    "deny": [],
+    "ask": []
+  },
+  "network": {
+    "enabled": false,
+    "domains": {}
+  },
+  "trustedWorkspaces": {
+    "F:/WorkSpace/DSH": {
+      "trusted": true,
+      "at": 1786814811864
+    }
+  },
+  "decisions": [],
+  "autoApprove": {
+    "enabled": true,
+    "modes": [
+      "workspace-write",
+      "danger-full-access"
+    ],
+    "overrideNeverPolicy": true,
+    "denyTools": []
+  }
+}

@@ -14,12 +14,13 @@
 #    - npm packages: better-sidebar, agent-teams, modlens, modsearch, archify,
 #      dsh-web-ui-all
 #    - GitHub tarballs / git: dsh-at-file, dsh-custom-tool, dsh-notification,
-#      dsh-genui, dsh_workflow
+#      dsh-genui, dsh_workflow, DSH-Plugins-Marketplace
 #    - cloned/bundled local plugins: dsh-turn-rewind, dsh-memory-evolve,
 #      dsh-super-injector, dsh-auto-approve, maid-atelier skin
-#    - DSH-Plugins-Marketplace
-#    - presets: anchored-standard, router-standard
+#    - presets: anchored-standard, router-standard, liangshen, liangshen-exact
 #    - extras: jacobian (global CLI), claude-paper (paper-study skill)
+#    - dsh-sandbox-governance: author-local plugin (no public remote), not
+#      installed by this script; reference only.
 # ============================================================
 
 $ErrorActionPreference = "Continue"
@@ -121,13 +122,14 @@ Add-Plugin "@nanmicoder/dsh-agent-teams"
 Add-Plugin "@liustack/modlens@latest"
 Add-Plugin "@liustack/modsearch@latest"
 Add-Plugin "@tt-a1i/archify-dsh@0.1.0"
-Add-Plugin "@linxin666/dsh-web-ui-all@0.1.10"
+Add-Plugin "@linxin666/dsh-web-ui-all@0.1.16"
 
 # ---------- 4. GitHub tarballs ----------
 Write-Host "`n########## Group 2: GitHub tarball plugins ##########" -ForegroundColor Magenta
-Add-Plugin "https://github.com/omdsh-dev/dsh-at-file/archive/refs/tags/v0.4.0.tar.gz"
+Add-Plugin "https://github.com/omdsh-dev/dsh-at-file/archive/refs/tags/v0.6.0.tar.gz"
 Add-Plugin "https://github.com/omdsh-dev/dsh-custom-tool/archive/refs/heads/main.tar.gz"
 Add-Plugin "https://github.com/omdsh-dev/dsh-notification/archive/refs/heads/main.tar.gz"
+Add-Plugin "https://github.com/bradeGithub/DSH-Plugins-Marketplace/archive/refs/tags/v1.4.9.tar.gz"
 
 # ---------- 5. git plugins ----------
 Write-Host "`n########## Group 3: git plugins ##########" -ForegroundColor Magenta
@@ -202,47 +204,35 @@ if (Install-BundledPlugin $maidSrc $maidDst) {
 "@
 }
 
-# ---------- 7. DSH-Plugins-Marketplace ----------
-Write-Host "`n########## Group 5: DSH-Plugins-Marketplace ##########" -ForegroundColor Magenta
-$mk = Join-Path $cache "DSH-Plugins-Marketplace"
-if (Ensure-GitClone "https://github.com/bradeGithub/DSH-Plugins-Marketplace.git" $mk) {
-  & (Join-Path $mk "install.ps1")
-} else {
-  Write-Host "[SKIP] DSH-Plugins-Marketplace clone failed" -ForegroundColor Yellow
-}
-
-# ---------- 8. presets ----------
+# ---------- 7. presets ----------
 Write-Host "`n########## Group 6: agent presets ##########" -ForegroundColor Magenta
 $presetBase = Join-Path $env:USERPROFILE ".dsh\.agent-presets"
 New-Item -ItemType Directory -Force -Path $presetBase | Out-Null
 
-$anchoredSrc = Join-Path $root "presets\anchored-standard"
-$anchoredDst = Join-Path $presetBase "anchored-standard"
-if (Test-Path (Join-Path $anchoredSrc "preset.yml")) {
-  if (Test-Path $anchoredDst) {
-    Write-Host "[SKIP] anchored-standard preset already exists: $anchoredDst" -ForegroundColor Yellow
+function Install-Preset([string]$name) {
+  $src = Join-Path $root ("presets\" + $name)
+  $dst = Join-Path $presetBase $name
+  if (Test-Path (Join-Path $src "preset.yml")) {
+    if (Test-Path $dst) {
+      Write-Host "[SKIP] $name preset already exists: $dst" -ForegroundColor Yellow
+    } else {
+      Copy-Item -Recurse $src $dst
+      Write-Host "[OK] $name preset installed" -ForegroundColor Green
+    }
   } else {
-    Copy-Item -Recurse $anchoredSrc $anchoredDst
-    Write-Host "[OK] anchored-standard preset installed" -ForegroundColor Green
+    Write-Host "[SKIP] $name preset source not found" -ForegroundColor Yellow
   }
-} else {
-  Write-Host "[SKIP] anchored-standard preset source not found" -ForegroundColor Yellow
 }
 
-$routerSrc = Join-Path $root "presets\router-standard"
-$routerDst = Join-Path $presetBase "router-standard"
-if (Test-Path (Join-Path $routerSrc "preset.yml")) {
-  if (Test-Path $routerDst) {
-    Write-Host "[SKIP] router-standard preset already exists: $routerDst" -ForegroundColor Yellow
-  } else {
-    Copy-Item -Recurse $routerSrc $routerDst
-    Write-Host "[OK] router-standard preset installed" -ForegroundColor Green
-  }
-} else {
-  Write-Host "[SKIP] router-standard preset source not found" -ForegroundColor Yellow
-}
+Install-Preset "anchored-standard"
+Install-Preset "router-standard"
+Install-Preset "liangshen"
+Install-Preset "liangshen-exact"
 
-# ---------- 9. extras (same as author environment) ----------
+# dsh-sandbox-governance is author-local (no public remote) — reference only.
+Write-Host "`n[dsh-sandbox-governance] author-local plugin, not installed by this script (see config/sandbox-rules.json for its rules)." -ForegroundColor DarkGray
+
+# ---------- 8. extras (same as author environment) ----------
 Write-Host "`n########## Group 7: extras ##########" -ForegroundColor Magenta
 Write-Host "=== Installing jacobian (global CLI) ===" -ForegroundColor Cyan
 npm install -g jacobian
@@ -252,7 +242,7 @@ Write-Host "=== Installing claude-paper (paper-study skill, deepseek-harness tar
 npx --yes @zlzliqing/claude-paper@latest install --target deepseek-harness
 if ($LASTEXITCODE -eq 0) { Write-Host "[OK] claude-paper" -ForegroundColor Green } else { Write-Host "[FAIL] claude-paper" -ForegroundColor Red }
 
-# ---------- 10. done ----------
+# ---------- 9. done ----------
 Write-Host ""
 Write-Host "============================================================" -ForegroundColor Green
 Write-Host "All plugin install steps finished."

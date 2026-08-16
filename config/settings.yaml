@@ -1,0 +1,20 @@
+ui-onboarding:
+  welcomeNoticeVersion: 2026-08-13.1
+agent-default-model:
+  provider: opencode-go
+  model: deepseek-v4-flash
+  reasoningEffort: max
+agent-presets:
+  default: router-standard
+llm-pi-ai:
+  providers:
+    opencode-go:
+      apiKeyEnv: OPENCODE_API_KEY
+permission:
+  defaultPreset: auto
+remote-web-ui:
+  autoTunnel: true
+dsh-better-sidebar:
+  interceptOpenPath: true
+ui-theme:
+  preference: light

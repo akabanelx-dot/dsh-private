@@ -1,4 +1,4 @@
-# dsh-plugin-config
+# dsh-private — DSH 配置快照与一键安装包
 
 作者 DSH Web 环境「同款插件配置」一键安装包。
 
@@ -12,20 +12,23 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 |---|---|
 | `install.ps1` | 一键安装脚本（Windows PowerShell） |
 | `DSH-PLUGINS.md` | 当前插件清单与说明（快照） |
-| `config/` | 当前 web profile 的 `package.json`、`cordis.patch.yml`、`cordis.yml`、`pnpm-workspace.yaml` 参考 |
+| `config/` | 当前 web profile 的 `package.json`、`cordis.patch.yml`、`cordis.yml`、`pnpm-workspace.yaml`，以及用户级 `settings.yaml`、`sandbox-rules.json`、`AGENTS.md` 参考 |
 | `plugins/dsh-auto-approve/` | 自动批准插件（本地自研，随包分发） |
 | `plugins/dsh-client-ui-skin-maid-atelier/` | 女仆装皮肤（本地自研，随包分发） |
 | `presets/anchored-standard/` | 锚定标准 Agent 预设 |
 | `presets/router-standard/` | 思维模式路由 Agent 预设（spec/react/weak） |
+| `presets/liangshen/` | 梁神模式 Agent 预设（两阶段锚定 + Code Mode 晋升） |
+| `presets/liangshen-exact/` | 梁神模式-精确实验版预设 |
 
 安装器运行时还会从公开仓库拉取：
 
 - npm：`dsh-better-sidebar`、`@nanmicoder/dsh-agent-teams`、`@liustack/modlens`、`@liustack/modsearch`、`@tt-a1i/archify-dsh`、`@linxin666/dsh-web-ui-all`
-- GitHub tarball / git：`dsh-at-file`、`dsh-custom-tool`、`dsh-notification`、`dsh-genui`、`dsh_workflow`
+- GitHub tarball / git：`dsh-at-file`、`dsh-custom-tool`、`dsh-notification`、`DSH-Plugins-Marketplace`、`dsh-genui`、`dsh_workflow`
 - 本地 link 插件：`dsh-turn-rewind`、`dsh-memory-evolve`（克隆到 `.cache/`）
 - `dsh-super-injector` v0.3.3 Release tarball
-- `DSH-Plugins-Marketplace`
 - 全局 CLI / Skill：`jacobian`、`claude-paper`
+
+> `dsh-sandbox-governance`（沙箱治理插件）是作者本地插件，无公开 remote，本安装器不安装；其规则文件见 `config/sandbox-rules.json`。
 
 ## 安装步骤
 
@@ -41,8 +44,8 @@ Agent 预设和常用扩展装到新的 DSH 环境里。
 
 ```powershell
 # 1. 克隆本仓库（或解压下载的 zip）
-git clone https://github.com/yjh051108/dsh-plugin-config.git
-cd dsh-plugin-config
+git clone https://github.com/akabanelx-dot/dsh-private.git
+cd dsh-private
 
 # 2. 运行一键安装（普通 PowerShell 窗口，不要在 AI 沙箱里跑）
 powershell -ExecutionPolicy Bypass -File .\install.ps1
@@ -55,15 +58,16 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 1. 重启 DSH Web：先关闭再重新运行 `dsh web`
 2. 浏览器硬刷新：`Ctrl+Shift+R`
 3. 新建会话时选择需要的 Agent 预设：
-   - `Router Standard (experimental)`：任务感知思维模式路由
+   - `Router Standard (experimental)`：任务感知思维模式路由（默认）
    - `Anchored Standard`：锚定标准模式
+   - `梁神模式` / `梁神模式-精确实验`：两阶段锚定 + Code Mode 晋升（需 0.1.16 聚合包）
 4. 验证插件：`dsh plugin --profile web list`
 
 ## 说明
 
 - 安装器里的 `dsh-auto-approve` 会自动调整到 `@deepseek-ai/dsh-web-app` 之前，保证自动批准应答者先于人工应答者注册。
 - `dsh-memory-evolve` 使用 `cordis.patch.yml` 注册，安装器会幂等追加补丁条目。
-- `DSH-Plugins-Marketplace` 使用其官方 `install.ps1` 安装，自带幂等补丁注册。
+- `DSH-Plugins-Marketplace` 以 v1.4.9 tarball 形式与其它插件一致安装（`dsh plugin add`）。
 - 如果本地已有同名预设或插件，安装器会跳过，不会覆盖你已有的配置。
 - 代理：如果本机 `127.0.0.1:7890` 有 Clash 等代理，安装器会自动启用，用于加速 GitHub 下载。
 

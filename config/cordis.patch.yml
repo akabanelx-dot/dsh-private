@@ -1,4 +1,4 @@
-﻿- insert:
+- insert:
     - id: dsh-memory-evolve
       name: dsh-memory-evolve
       config:
@@ -13,4 +13,11 @@
     - id: dsh-external-dsh-client-ui-skin-maid-atelier
       name: "@dsh-external/dsh-client-ui-skin-maid-atelier"
 - id: ui-dsh-aionui-panel
+  disabled: true
+
+# --- shell backend: switch to Git Bash on Windows ---
+# 键级合并覆盖 dsh-base bundle 的平台门禁；回滚 = 删除以下两条。
+- id: bash-sandbox
+  disabled: false
+- id: pwsh-sandbox
   disabled: true
